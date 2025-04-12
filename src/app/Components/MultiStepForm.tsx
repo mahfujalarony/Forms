@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import { useMutation } from "@tanstack/react-query"; 
 import PersonalInfoForm from "./PersonalInfoForm";
 import AddressForm from "./AddressForm";
 import AccountForm from "./AccountForm";
 import Success from "./Success";
+import { ThemeToggle } from "./ThemeToggle";
 
 export type FormData = {
   fullName: string;
@@ -32,6 +34,19 @@ export default function MultiStepForm() {
     confirmPassword: "",
   });
 
+  const mutation = useMutation({
+    mutationFn: async (data: FormData) => {
+      console.log("Sending form data to the server:", data);
+      return data;
+    },
+    onSuccess: (data) => {
+      console.log("Form successfully submitted:", data);
+    },
+    onError: (error) => {
+      console.error("Error occurred:", error);
+    },
+  });
+
   const handleNext = (data: Partial<FormData>) => {
     setFormData((prev) => ({ ...prev, ...data }));
     setStep((prev) => prev + 1);
@@ -43,16 +58,25 @@ export default function MultiStepForm() {
 
   const handleSubmit = (data: Partial<FormData>) => {
     const finalData = { ...formData, ...data };
-    console.log("Submitted Data:", finalData);
-    setFormData(finalData); // ফাইনাল ডেটা সেট করা
-    setStep(4); // Success স্টেপে যাওয়া
+    console.log("Form Data to submit:", finalData);
+    mutation.mutate(finalData);
+    setFormData(finalData);
+    setStep(4);
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded-md shadow-md">
-      <h1 className="text-2xl font-bold mb-4">Multi-Step Form</h1>
+    <div className="border border-gray-400 max-w-md mx-auto mt-10 p-6  dark:bg-dark-card rounded-xl shadow-lg transition-all duration-300">
+      {/* Theme Toggle Button */}
+      <div className="flex justify-end mb-2">
+        <ThemeToggle />
+      </div>
+
+      <h1 className="text-2xl font-bold mb-4 ">
+        Multi-Step Form
+      </h1>
+
       {step < 4 && (
-        <div className="mb-4">
+        <div className="mb-4 text-gray-700 dark:text-gray-300">
           <p>Step {step} of 3</p>
         </div>
       )}
@@ -67,6 +91,7 @@ export default function MultiStepForm() {
           }}
         />
       )}
+
       {step === 2 && (
         <>
           <AddressForm
@@ -79,12 +104,13 @@ export default function MultiStepForm() {
           />
           <button
             onClick={handlePrevious}
-            className="mt-4 rounded-md bg-gray-500 px-4 py-2 text-white"
+            className="mt-4 rounded-md bg-gray-500 hover:bg-gray-600 px-4 py-2 text-white transition"
           >
             Previous
           </button>
         </>
       )}
+
       {step === 3 && (
         <>
           <AccountForm
@@ -97,12 +123,13 @@ export default function MultiStepForm() {
           />
           <button
             onClick={handlePrevious}
-            className="mt-4 rounded-md bg-gray-500 px-4 py-2 text-white"
+            className="mt-4 rounded-md bg-gray-500 hover:bg-gray-600 px-4 py-2 text-white transition"
           >
             Previous
           </button>
         </>
       )}
+
       {step === 4 && <Success data={formData} />}
     </div>
   );

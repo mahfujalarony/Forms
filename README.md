@@ -12,7 +12,7 @@ This project demonstrates how to create a user-friendly multi-step form with pro
 - **React Hook Form** – for form state management
 - **Zod** – for schema-based form validation
 - **TailwindCSS** – for responsive and modern UI styling
-- **(Optional)** React Query / RTK Query – to simulate API calls
+- **API** React Query / RTK Query – to simulate API calls
 
 ##  Form Steps
 

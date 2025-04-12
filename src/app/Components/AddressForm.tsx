@@ -24,12 +24,15 @@ export default function AddressForm({ onSubmit, defaultValues }: AddressFormProp
   });
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto bg-white shadow-lg rounded-lg p-6 space-y-4">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="dark:bg-dark-card max-w-md mx-auto shadow-lg rounded-lg p-6 space-y-4"
+    >
       <div>
-        <label className="block text-sm font-medium text-gray-700">Street Address</label>
+        <label className="text-sm md:text-lg font-medium">Street Address :</label>
         <input
           {...register("street")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="mt-1 block w-full rounded-md border-2 border-white text-sm md:text-lg dark:border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
           placeholder="Enter your street address"
         />
         {errors.street && (
@@ -38,10 +41,10 @@ export default function AddressForm({ onSubmit, defaultValues }: AddressFormProp
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">City</label>
+        <label className="text-sm md:text-lg font-medium">City :</label>
         <input
           {...register("city")}
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="mt-1 block w-full rounded-md border-2 border-white text-sm md:text-lg dark:border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
           placeholder="Enter your city"
         />
         {errors.city && (
@@ -50,11 +53,11 @@ export default function AddressForm({ onSubmit, defaultValues }: AddressFormProp
       </div>
 
       <div>
-        <label className="block text-sm font-medium text-gray-700">Zip Code</label>
+        <label className="text-sm md:text-lg font-medium">Zip Code :</label>
         <input
           {...register("zip")}
           type="number"
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
+          className="mt-1 block w-full rounded-md border-2 border-white text-sm md:text-lg dark:border-black shadow-sm focus:ring-blue-500 focus:border-blue-500 p-2"
           placeholder="Enter your zip code"
         />
         {errors.zip && (
